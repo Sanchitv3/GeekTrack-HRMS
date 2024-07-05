@@ -1,6 +1,6 @@
-import { Timestamp, addDoc, collection } from "firebase/firestore";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
+import { Timestamp, addDoc, collection, getDocs } from "firebase/firestore";
 
 const AddEmployee: React.FC = () => {
   const [name, setName] = useState("");
@@ -14,6 +14,17 @@ const AddEmployee: React.FC = () => {
   const [country, setCountry] = useState("");
   const [dateOfJoining, setDateOfJoining] = useState("");
   const [roleID, setRoleID] = useState("");
+  const [roles, setRoles] = useState<{ id: string; roleName: string }[]>([]);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      const rolesCollection = await getDocs(collection(db, "Roles"));
+      const rolesData = rolesCollection.docs.map(doc => ({ id: doc.id, ...doc.data() })) as { id: string; roleName: string }[];
+      setRoles(rolesData);
+    };
+
+    fetchRoles();
+  }, []);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -59,7 +70,7 @@ const AddEmployee: React.FC = () => {
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 w-[80%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800  focus:translate-x-2 duration-700"
+              className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 w-[60%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800  focus:translate-x-2 duration-700"
               placeholder="Employee Name"
             />
           </div>
@@ -71,7 +82,7 @@ const AddEmployee: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Employee Email"
-              className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 w-[80%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
+              className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 w-[60%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
               type="email"
             />
           </div>
@@ -82,7 +93,7 @@ const AddEmployee: React.FC = () => {
             <input
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 w-[80%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
+              className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 w-[60%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
               placeholder="Employee Phone"
               type="number"
             />
@@ -94,7 +105,7 @@ const AddEmployee: React.FC = () => {
             <input
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
-              className="border-none outline-none rounded-xl p-2 shadow-md w-[80%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
+              className="border-none outline-none rounded-xl p-2 shadow-md w-[60%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
               placeholder="Department"
               type="text"
             />
@@ -103,12 +114,11 @@ const AddEmployee: React.FC = () => {
             <label className="font-bold shadow-slate-700">
               <i className="fa-solid fa-map-marker-alt"></i> Address Line 1
             </label>
-            <input
+            <textarea
               value={addressLine1}
               onChange={(e) => setAddressLine1(e.target.value)}
-              className="border-none outline-none rounded-xl p-2 shadow-md w-[80%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
+              className="border-none outline-none rounded-xl p-2 shadow-md w-[60%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
               placeholder="Address Line 1"
-              type="text"
             />
           </div>
           <div className="justify-between flex items-center">
@@ -118,7 +128,7 @@ const AddEmployee: React.FC = () => {
             <input
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="border-none outline-none rounded-xl p-2 shadow-md w-[80%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
+              className="border-none outline-none rounded-xl p-2 shadow-md w-[60%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
               placeholder="City"
               type="text"
             />
@@ -130,7 +140,7 @@ const AddEmployee: React.FC = () => {
             <input
               value={state}
               onChange={(e) => setState(e.target.value)}
-              className="border-none outline-none rounded-xl p-2 shadow-md w-[80%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
+              className="border-none outline-none rounded-xl p-2 shadow-md w-[60%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
               placeholder="State"
               type="text"
             />
@@ -142,7 +152,7 @@ const AddEmployee: React.FC = () => {
             <input
               value={zipcode}
               onChange={(e) => setZipcode(e.target.value)}
-              className="border-none outline-none rounded-xl p-2 shadow-md w-[80%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
+              className="border-none outline-none rounded-xl p-2 shadow-md w-[60%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
               placeholder="Zipcode"
               type="text"
             />
@@ -154,7 +164,7 @@ const AddEmployee: React.FC = () => {
             <input
               value={country}
               onChange={(e) => setCountry(e.target.value)}
-              className="border-none outline-none rounded-xl p-2 shadow-md w-[80%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
+              className="border-none outline-none rounded-xl p-2 shadow-md w-[60%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
               placeholder="Country"
               type="text"
             />
@@ -173,23 +183,28 @@ const AddEmployee: React.FC = () => {
           </div>
           <div className="justify-between flex items-center">
             <label className="font-bold">
-              <i className="fa-solid fa-user-tag"></i> Role ID
+              <i className="fa-solid fa-user-tag"></i> Role
             </label>
-            <input
+            <select
               value={roleID}
               onChange={(e) => setRoleID(e.target.value)}
-              className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 w-[80%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
-              placeholder="Role ID"
-              type="text"
-            />
+              className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 w-[60%] bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
+            >
+              <option value="" disabled>Select Role</option>
+              {roles.map((role) => (
+                <option key={role.id} value={role.id}>{role.roleName}</option>
+              ))}
+            </select>
           </div>
         </div>
-        <button
-          type="submit"
-          className="bg-white text-black font-bold px-6 py-4 rounded-3xl hover:text-red-700 hover:translate-y-1 shadow-xl shadow-slate-700 duration-500"
-        >
-          Add Employee
-        </button>
+        <div className="w-[80%]">
+          <button
+            className="bg-black shadow-xl text-white p-2 rounded-xl w-full font-bold font-mono"
+            type="submit"
+          >
+            Add Employee
+          </button>
+        </div>
       </form>
     </div>
   );
