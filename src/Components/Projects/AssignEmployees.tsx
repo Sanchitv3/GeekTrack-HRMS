@@ -12,6 +12,7 @@ interface Employee {
 interface Project {
   id: string;
   name: string;
+  deleted?:Boolean;
 }
 
 const AssignEmployees: React.FC = () => {
@@ -86,7 +87,7 @@ const AssignEmployees: React.FC = () => {
                   >
                     <option value="" disabled>Select a Project</option>
                     {projects.map((project) => (
-                      <option key={project.id} value={project.id}>{project.name}</option>
+                      <option key={project.id} value={project.id} disabled={project.deleted===true}>{project.name}</option>
                     ))}
                   </select>
                   <button

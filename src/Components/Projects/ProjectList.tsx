@@ -51,7 +51,7 @@ const ProjectList: React.FC = () => {
   const filteredProjects = projects.filter(project => showDeleted || !project.deleted);
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="p-10 max-w-4xl mx-auto shadow-2xl rounded-2xl h-full shadow-slate-500">
       <h1 className="text-center text-2xl font-bold mb-6">Project List</h1>
       <form onSubmit={handleAddProject} className="mb-6">
         <div className="flex flex-col space-y-4">

@@ -4,7 +4,7 @@ import HRMS_LOGO from "../../assets/HRMS_LOGO.png"
 
 const Sidebar: React.FC = () => {
   return (
-    <div className="h-[93vh] bg-white shadow-md w-34 fixed top-14">
+    <div className="h-[93vh] bg-white shadow-md w-34 fixed top-14 z-50">
       <div className="p-4 flex flex-col justify-between h-full">
         
         <nav className="mt-6">
@@ -26,7 +26,7 @@ const Sidebar: React.FC = () => {
               </svg>
               Dashboard
             </Link>
-            <Link to="/addEmployee" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">
+            <Link to="/manageEmployees" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">
               <svg
                 className="w-6 h-6 mr-2 text-gray-400"
                 fill="none"
@@ -41,7 +41,7 @@ const Sidebar: React.FC = () => {
                   d="M17 20h5v-2a4 4 0 00-4-4h-1M9 16H7a4 4 0 00-4 4v2h5m0-6V4a4 4 0 014-4h6a4 4 0 014 4v12m-10 0h10"
                 />
               </svg>
-              Add Employee
+              Manage Employees
             </Link>
             <Link to="/projects" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">
               <svg

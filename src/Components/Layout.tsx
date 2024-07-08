@@ -10,7 +10,7 @@ const Layout: React.FC = () => {
       <Sidebar />
       <div className="flex flex-col flex-grow">
         <Navbar />
-        <main className="flex-grow p-6 bg-gray-100 mt-14">
+        <main className="flex-grow p-6 bg-gradient-to-r from-slate-100 to-slate-300 mt-14 ml-60 ">
           <Outlet />
         </main>
       </div>

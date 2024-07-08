@@ -60,7 +60,7 @@ const AddEmployee: React.FC = () => {
     <div className="flex justify-center">
       <form
         onSubmit={handleSubmit}
-        className="flex items-center justify-between flex-col h-[90vh] w-[70vw] bg-gradient-to-b from-slate-100 to-slate-300 rounded-3xl shadow-xl p-10"
+        className="flex items-center justify-between flex-col h-[90vh] w-[70vw] bg-white rounded-3xl shadow-2xl shadow-slate-400 p-10"
       >
         <div className="justify-around flex flex-col h-[80%] w-[80%] font-mono">
           <div className="justify-between flex items-center">
@@ -197,9 +197,9 @@ const AddEmployee: React.FC = () => {
             </select>
           </div>
         </div>
-        <div className="w-[80%]">
+        <div className="w-[80%] flex justify-center">
           <button
-            className="bg-black shadow-xl text-white p-2 rounded-xl w-full font-bold font-mono"
+            className="bg-black shadow-xl text-white p-2 rounded-xl w-[50%] font-bold font-mono hover:translate-y-1 hover:bg-red-600 duration-700"
             type="submit"
           >
             Add Employee

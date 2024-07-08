@@ -7,6 +7,8 @@ import Layout from './Components/Layout';
 import AddEmployee from './Components/Employee/AddEmployee';
 import ProjectList from './Components/Projects/ProjectList';
 import AssignEmployees from './Components/Projects/AssignEmployees';
+import EmployeeList from './Components/Employee/EmployeeList';
+import ManageEmployees from './Components/Employee/ManageEmployees';
 function App() {
   return (
     <Router>
@@ -15,9 +17,11 @@ function App() {
       <Route element={<ProtectedRoute />}>
       <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/projects" element={<ProjectList/>} />
+            <Route path="/assign-employees" element={<AssignEmployees/>} />
             <Route path="/addEmployee" element={<AddEmployee/>}/>
-            <Route path="/projects" Component={ProjectList} />
-            <Route path="/assign-employees" Component={AssignEmployees} />
+            <Route path="/employee-list" element={<EmployeeList />} />
+            <Route path="/manageEmployees" element={<ManageEmployees />}/>
           </Route>
         </Route>
     </Routes>
