@@ -9,9 +9,8 @@ import TimesheetList from "../Timesheet/TimesheetList";
 const Dashboard: React.FC = () => {
   return (
     <div>
-      <h1>dashboard</h1>
     <TimesheetForm/>
-    <TimesheetList/>
+    {/* <TimesheetList/> */}
     </div>
     
   );
