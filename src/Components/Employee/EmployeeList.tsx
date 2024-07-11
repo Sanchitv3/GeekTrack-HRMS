@@ -9,6 +9,7 @@ interface Employee {
   name: string;
   email: string;
   deleted: boolean;
+  deletedAt: string;
   roleID: string; // Added roleID to Employee type
 }
 
@@ -45,8 +46,10 @@ const EmployeeList: React.FC = () => {
   }, []);
 
   const handleDelete = useCallback(async (id: string) => {
+    const deletedAt = new Date().toLocaleString();
     await updateDoc(doc(db, "Employees", id), {
-      deleted: true
+      deleted: true,
+      deletedAt,
     });
     setConfirmDelete(null);
   }, []);

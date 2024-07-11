@@ -75,10 +75,10 @@ const AssignEmployees: React.FC = () => {
           </thead>
           <tbody>
             {employees.map((employee) => (
-              <tr key={employee.id} className={employee.deleted ? "bg-red-100" : ""}>
-                <td className={`py-2 px-4 border-b ${employee.deleted ? "text-red-500" : ""}`}>{employee.name}</td>
-                <td className="py-2 px-4 border-b">{employee.projectID ? projects.find(project => project.id === employee.projectID)?.name : "None"}</td>
-                <td className="py-2 px-4 border-b space-x-2">
+              <tr key={employee.id} className={employee.deleted ? "opacity-40" : ""}>
+                <td className={`py-2 px-4 ${employee.deleted ? "text-slate-900" : ""}`}>{employee.name}</td>
+                <td className="py-2 px-4">{employee.projectID ? projects.find(project => project.id === employee.projectID)?.name : "None"}</td>
+                <td className="py-2 px-4 space-x-2">
                   <select
                     value={employeeProjectSelections[employee.id] || ""}
                     onChange={(e) => handleProjectSelectionChange(employee.id, e.target.value)}
