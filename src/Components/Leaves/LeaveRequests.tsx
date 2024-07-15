@@ -62,28 +62,34 @@ const LeaveRequests: React.FC = () => {
       );
       alert(`Leave request ${status.toLowerCase()} successfully.`);
     } catch (error) {
-      console.error(`Error updating leave request status to ${status}: `, error);
+      console.error(
+        `Error updating leave request status to ${status}: `,
+        error
+      );
       alert(`Error updating leave request status to ${status}.`);
     }
   };
 
-  const renderItem = ({ item }: { item: LeaveRequest }) => {
-    const employee = employees.find(emp => emp.id === item.employeeID);
-    const employeeName = employee ? employee.name : 'Unknown';
-    
+  const renderRequest = (request: LeaveRequest) => {
+    const employee = employees.find((emp) => emp.id === request.employeeID);
+    const employeeName = employee ? employee.name : "Unknown";
+
     return (
-      <div style={styles.requestContainer}>
-        <p>Employee Name: {employeeName}</p>
-        <p>Start Date: {new Date(item.startDate).toLocaleDateString()}</p>
-        <p>End Date: {new Date(item.endDate).toLocaleDateString()}</p>
-        <p>Reason: {item.reason}</p>
-        <p>Status: {item.status}</p>
-        {item.status === "Pending" && (
-          <div>
-            <button onClick={() => handleUpdateStatus(item.id, "Approved")}>
+      <div key={request.id} className="shadow-2xl w-[25%] p-4 rounded-3xl">
+        <p><b></b>Employee Name: {employeeName}</p>
+        <p>Start Date: {new Date(request.startDate).toLocaleDateString()}</p>
+        <p>End Date: {new Date(request.endDate).toLocaleDateString()}</p>
+        <p>Reason: {request.reason}</p>
+        <p>Status: {request.status}</p>
+        {request.status === "Pending" && (
+          <div className="w-full flex justify-evenly p-2">
+            <button
+              onClick={() => handleUpdateStatus(request.id, "Approved")}
+              className="p-2 bg-green-500 rounded-3xl hover:translate-y-1 duration-700 hover:opacity-80 text-white" 
+            >
               Approve
             </button>
-            <button onClick={() => handleUpdateStatus(item.id, "Rejected")}>
+            <button onClick={() => handleUpdateStatus(request.id, "Rejected")} className="p-2 bg-red-500 rounded-3xl hover:translate-y-1 duration-700 hover:opacity-80 text-white">
               Reject
             </button>
           </div>
@@ -93,40 +99,13 @@ const LeaveRequests: React.FC = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h1>Leave Requests</h1>
-      {leaveRequests.map((request) => (
-        <div key={request.id} style={styles.requestContainer}>
-          <p>Employee Name: {request.employeeID}</p>
-          <p>Start Date: {new Date(request.startDate).toLocaleDateString()}</p>
-          <p>End Date: {new Date(request.endDate).toLocaleDateString()}</p>
-          <p>Reason: {request.reason}</p>
-          <p>Status: {request.status}</p>
-          {request.status === "Pending" && (
-            <div>
-              <button onClick={() => handleUpdateStatus(request.id, "Approved")}>
-                Approve
-              </button>
-              <button onClick={() => handleUpdateStatus(request.id, "Rejected")}>
-                Reject
-              </button>
-            </div>
-          )}
-        </div>
-      ))}
+    <div className="flex flex-col gap-10">
+      <h1 className="text-3xl font-serif font-semibold tracking-wider text-center">Leave Requests</h1>
+      <div className="flex gap-10">
+      {leaveRequests.map(renderRequest)}
+      </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: 20,
-  },
-  requestContainer: {
-    border: "1px solid #ccc",
-    padding: 10,
-    marginBottom: 10,
-  },
 };
 
 export default LeaveRequests;

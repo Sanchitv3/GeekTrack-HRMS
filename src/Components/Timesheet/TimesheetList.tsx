@@ -5,6 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 interface Timesheet {
+  description: string;
   id: string;
   employeeID: string;
   projectID: string;
@@ -64,6 +65,7 @@ const TimesheetList: React.FC = () => {
           <tr className="text-left">
             <th className="py-2 px-4 border-b">Employee Name</th>
             <th className="py-2 px-4 border-b">Project Name</th>
+            <th className="py-2 px-4 border-b">Description</th>
             <th className="py-2 px-4 border-b">Date</th>
             <th className="py-2 px-4 border-b">Hours Worked</th>
             <th className="py-2 px-4 border-b">Status</th>
@@ -75,6 +77,7 @@ const TimesheetList: React.FC = () => {
             <tr key={timesheet.id}>
               <td className="py-2 px-4 border-b">{employees[timesheet.employeeID] || "Unknown"}</td>
               <td className="py-2 px-4 border-b">{projects[timesheet.projectID] || "Unknown"}</td>
+              <td className="py-2 px-4 border-b">{timesheet.description || "Undefined"}</td>
               <td className="py-2 px-4 border-b">{timesheet.date}</td>
               <td className="py-2 px-4 border-b">{timesheet.hoursWorked}</td>
               <td className="py-2 px-4 border-b">{timesheet.status}</td>
