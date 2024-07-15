@@ -9,6 +9,7 @@ import ProjectList from './Components/Projects/ProjectList';
 import AssignEmployees from './Components/Projects/AssignEmployees';
 import EmployeeList from './Components/Employee/EmployeeList';
 import ManageEmployees from './Components/Employee/ManageEmployees';
+import LeaveRequests from './Components/Leaves/LeaveRequests';
 function App() {
   return (
     <Router>
@@ -22,6 +23,7 @@ function App() {
             <Route path="/addEmployee" element={<AddEmployee/>}/>
             <Route path="/employee-list" element={<EmployeeList />} />
             <Route path="/manageEmployees" element={<ManageEmployees />}/>
+            <Route path="leaveRequests" element={<LeaveRequests />}/>
           </Route>
         </Route>
     </Routes>

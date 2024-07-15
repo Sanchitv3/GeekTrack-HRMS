@@ -60,7 +60,7 @@ const Sidebar: React.FC = () => {
               </svg>
               Projects
             </Link>
-            <Link to="/calendar" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">
+            <Link to="/leaveRequests" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">
               <svg
                 className="w-6 h-6 mr-2 text-gray-400"
                 fill="none"

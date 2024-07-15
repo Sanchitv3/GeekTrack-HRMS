@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { db } from "../../firebase";
-import { collection, onSnapshot, updateDoc, doc } from "firebase/firestore";
+import { collection, onSnapshot, updateDoc, doc, getDocs } from "firebase/firestore";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 
@@ -11,10 +11,37 @@ interface Timesheet {
   date: string;
   hoursWorked: number;
   status: string;
+  employeeName?: string;
+  projectName?: string;
 }
 
 const TimesheetList: React.FC = () => {
   const [timesheets, setTimesheets] = useState<Timesheet[]>([]);
+  const [employees, setEmployees] = useState<{ [key: string]: string }>({});
+  const [projects, setProjects] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      const employeesSnapshot = await getDocs(collection(db, "Employees"));
+      const employeesData: { [key: string]: string } = {};
+      employeesSnapshot.forEach(doc => {
+        employeesData[doc.id] = doc.data().name;
+      });
+      setEmployees(employeesData);
+    };
+
+    const fetchProjects = async () => {
+      const projectsSnapshot = await getDocs(collection(db, "Projects"));
+      const projectsData: { [key: string]: string } = {};
+      projectsSnapshot.forEach(doc => {
+        projectsData[doc.id] = doc.data().name;
+      });
+      setProjects(projectsData);
+    };
+
+    fetchEmployees();
+    fetchProjects();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "Timesheets"), (snapshot) => {
@@ -34,9 +61,9 @@ const TimesheetList: React.FC = () => {
       <h2>Timesheet List</h2>
       <table className="min-w-full bg-white border rounded-3xl">
         <thead>
-          <tr>
-            <th className="py-2 px-4 border-b">Employee ID</th>
-            <th className="py-2 px-4 border-b">Project ID</th>
+          <tr className="text-left">
+            <th className="py-2 px-4 border-b">Employee Name</th>
+            <th className="py-2 px-4 border-b">Project Name</th>
             <th className="py-2 px-4 border-b">Date</th>
             <th className="py-2 px-4 border-b">Hours Worked</th>
             <th className="py-2 px-4 border-b">Status</th>
@@ -46,8 +73,8 @@ const TimesheetList: React.FC = () => {
         <tbody>
           {timesheets.map((timesheet) => (
             <tr key={timesheet.id}>
-              <td className="py-2 px-4 border-b">{timesheet.employeeID}</td>
-              <td className="py-2 px-4 border-b">{timesheet.projectID}</td>
+              <td className="py-2 px-4 border-b">{employees[timesheet.employeeID] || "Unknown"}</td>
+              <td className="py-2 px-4 border-b">{projects[timesheet.projectID] || "Unknown"}</td>
               <td className="py-2 px-4 border-b">{timesheet.date}</td>
               <td className="py-2 px-4 border-b">{timesheet.hoursWorked}</td>
               <td className="py-2 px-4 border-b">{timesheet.status}</td>
