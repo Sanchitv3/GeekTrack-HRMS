@@ -111,6 +111,23 @@ const Sidebar: React.FC = () => {
               </svg>
               Reports
             </Link>
+            <Link to="/attendance-form" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">
+              <svg
+                className="w-6 h-6 mr-2 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 17v-1a3 3 0 013-3h6a3 3 0 013 3v1M9 7h.01M15 7h.01M12 12h.01M3 12a9 9 0 0118 0 9 9 0 01-18 0z"
+                />
+              </svg>
+              Attendance
+            </Link>
           </div>
         </nav>
         <div className="flex items-center justify-center">

@@ -78,7 +78,7 @@ const TimesheetList: React.FC = () => {
               <td className="py-2 px-4 border-b">{employees[timesheet.employeeID] || "Unknown"}</td>
               <td className="py-2 px-4 border-b">{projects[timesheet.projectID] || "Unknown"}</td>
               <td className="py-2 px-4 border-b">{timesheet.description || "Undefined"}</td>
-              <td className="py-2 px-4 border-b">{timesheet.date}</td>
+              <td className="py-2 px-4 border-b">{timesheet.date.split("T")[0]}</td>
               <td className="py-2 px-4 border-b">{timesheet.hoursWorked}</td>
               <td className="py-2 px-4 border-b">{timesheet.status}</td>
               <td className="py-2 px-4 border-b">
