@@ -7,6 +7,8 @@ interface Project {
   id: string;
   name: string;
   description: string;
+  startDate: string;
+  endDate: string;
   deleted: boolean;
 }
 
@@ -14,6 +16,8 @@ const ProjectList: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [projectName, setProjectName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
+  const [projectStartDate, setProjectStartDate] = useState("");
+  const [projectEndDate, setProjectEndDate] = useState("");
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [showDeleted, setShowDeleted] = useState(false);
 
@@ -35,11 +39,15 @@ const ProjectList: React.FC = () => {
     await addDoc(collection(db, "Projects"), {
       name: projectName,
       description: projectDescription,
+      startDate: projectStartDate,
+      endDate: projectEndDate,
       deleted: false,
     });
     setProjectName("");
     setProjectDescription("");
-  }, [projectName, projectDescription]);
+    setProjectStartDate("");
+    setProjectEndDate("");
+  }, [projectName, projectDescription, projectStartDate, projectEndDate]);
 
   const handleDeleteProject = useCallback(async (id: string) => {
     await updateDoc(doc(db, "Projects", id), {
@@ -53,8 +61,9 @@ const ProjectList: React.FC = () => {
   return (
     <div className="p-10 max-w-4xl mx-auto shadow-2xl rounded-2xl h-full shadow-slate-500">
       <h1 className="text-center text-2xl font-bold mb-6">Project List</h1>
-      <form onSubmit={handleAddProject} className="mb-6">
-        <div className="flex flex-col space-y-4">
+      <form onSubmit={handleAddProject} className="mb-6 flex flex-col items-center gap-8">
+        <div className="grid grid-cols-2 w-full gap-2">
+        <label className="font-bold text-slate-500">Project Name:</label>
           <input
             type="text"
             value={projectName}
@@ -63,6 +72,7 @@ const ProjectList: React.FC = () => {
             className="border p-2 rounded"
             required
           />
+           <label className="font-bold text-slate-500">Project Description:</label>
           <textarea
             value={projectDescription}
             onChange={(e) => setProjectDescription(e.target.value)}
@@ -70,8 +80,27 @@ const ProjectList: React.FC = () => {
             className="border p-2 rounded"
             required
           />
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded">Add Project</button>
+           <label className="font-bold text-slate-500">Start Date:</label>
+          <input
+            type="date"
+            value={projectStartDate}
+            onChange={(e) => setProjectStartDate(e.target.value)}
+            placeholder="Start Date"
+            className="border p-2 rounded"
+            required
+          />
+           <label className="font-bold text-slate-500">End Date:</label>
+          <input
+            type="date"
+            value={projectEndDate}
+            onChange={(e) => setProjectEndDate(e.target.value)}
+            placeholder="End Date"
+            className="border p-2 rounded"
+            required
+          />
+          
         </div>
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded-3xl w-[25%] hover:translate-y-2 hover:opacity-65 duration-700">Add Project</button>
       </form>
       <div className="flex justify-between mb-4">
         <label className="flex items-center space-x-2">
@@ -89,6 +118,8 @@ const ProjectList: React.FC = () => {
             <tr>
               <th className="py-2 px-4 border-b">Name</th>
               <th className="py-2 px-4 border-b">Description</th>
+              <th className="py-2 px-4 border-b">Start Date</th>
+              <th className="py-2 px-4 border-b">End Date</th>
               <th className="py-2 px-4 border-b">Actions</th>
             </tr>
           </thead>
@@ -97,6 +128,8 @@ const ProjectList: React.FC = () => {
               <tr key={project.id} className={project.deleted ? 'bg-red-200' : ''}>
                 <td className="py-2 px-4 border-b">{project.name}</td>
                 <td className="py-2 px-4 border-b">{project.description}</td>
+                <td className="py-2 px-4 border-b">{project.startDate}</td>
+                <td className="py-2 px-4 border-b">{project.endDate}</td>
                 <td className="py-2 px-4 border-b">
                   <button
                     type="button"

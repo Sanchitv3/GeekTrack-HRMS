@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
+import { programmingIllustration } from "../../assets";
 
 interface Attendance {
   id: string;
@@ -50,8 +51,9 @@ const AttendanceList: React.FC = () => {
   };
 
   return (
-    <div className="">
+    <div className="flex flex-col justify-center items-center">
       <h1 className="font-bold text-center text-4xl font-mono p-4">Attendance Records</h1>
+      <img src={programmingIllustration} alt="illustration" className="h-[25%] w-[25%]"/>
       <div className="grid grid-cols-4 gap-6">
         {attendanceRecords.map((record) => (
           <div key={record.id} className="p-2 rounded-xl shadow-lg ">
