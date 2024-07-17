@@ -9,6 +9,7 @@ import pic1 from "./pic1.jpg";
 import addEmp from "./addEmp.svg";
 import empList from "./empList.svg";
 import timesheet from "./timesheet.svg";
+import programmingIllustration from './programmingIllustration.svg';
 export {
   GeekyLogo,
   GoogleIcon,
@@ -21,4 +22,5 @@ export {
   addEmp,
   empList,
   timesheet,
+  programmingIllustration,
 };

@@ -54,11 +54,11 @@ const AttendanceRecord: React.FC = () => {
     }, [employeeID]);
 
     return (
-        <div style={styles.main}>
-            <h1 style={styles.title}>Attendance Record</h1>
-            <div style={styles.attendanceRecords}>
+        <div className=''>
+            <h1 className='font-bold text-xl text-center'>Attendance Record</h1>
+            <div className='grid grid-cols-5 gap-8'>
                 {attendanceRecords.map(record => (
-                    <div key={record.id} style={styles.attendanceItem}>
+                    <div key={record.id} className='p-4 border-b-4'>
                         <p>Date: {new Date(record.date).toLocaleDateString()}</p>
                         <p>Status: {record.status}</p>
                     </div>
@@ -68,25 +68,5 @@ const AttendanceRecord: React.FC = () => {
     );
 }
 
-const styles: { [key: string]: React.CSSProperties } = {
-    main: {
-        marginTop: '40px',
-    },
-    attendanceRecords: {
-        maxHeight: '500px',
-        overflowY: 'auto',
-        padding: '0 16px',
-    },
-    attendanceItem: {
-        padding: '16px',
-        borderBottom: '1px solid #ccc',
-        marginBottom: '8px',
-    },
-    title: {
-        fontSize: '18px',
-        fontWeight: 'bold',
-        marginBottom: '8px',
-    },
-};
 
 export default AttendanceRecord;

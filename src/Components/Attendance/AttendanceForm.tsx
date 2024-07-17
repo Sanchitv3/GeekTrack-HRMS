@@ -56,33 +56,34 @@ interface Attendance {
     };
   
     return (
-      <div style={styles.container} className="flex flex-col items-center gap-[20px] mt-[40px]">
-        <div style={styles.formInputs} className="mb-[16px]">
+        <div className="flex flex-col gap-20">
+      <div  className="flex flex-col items-center gap-[20px]">
+        <div  className="mb-[16px]">
           <label className="mb-[8px] text-gray-500">Date: {new Date().toISOString().split("T")[0]}</label>
         </div>
-        <div style={styles.formInputs}>
-          <label className="mb-[8px] text-gray-500">Status</label>
+        <div className="flex items-center gap-2">
+          <label className="mb-[8px] text-gray-500">Status:</label>
           <select value={status} onChange={(e) => setStatus(e.target.value)} className="p-[8px] rounded-md border">
             <option value="WFH">Working from Home</option>
             <option value="WFO">Working from Office</option>
           </select>
         </div>
-        <button onClick={handleSubmit} style={styles.btn}>Submit Attendance</button>
-        <AttendanceRecord/>
-      </div>
+        <button onClick={handleSubmit} className="bg-[#3B82F6] p-4 text-white rounded-3xl font-bold hover:translate-y-1 duration-700 hover:opacity-65">Submit Attendance</button>
+        
+      </div><AttendanceRecord/></div>
     );
   };
-  const styles: { [key: string]: React.CSSProperties } = {
-    btn: {
-      marginTop: "24px",
-      backgroundColor: "#3B82F6",
-      padding: "10px 20px",
-      borderRadius: "24px",
-      color: "white",
-      fontWeight: "bold",
-      fontSize: "16px",
-      cursor: "pointer",
-    },
-  };
+//   const styles: { [key: string]: React.CSSProperties } = {
+//     btn: {
+//       marginTop: "24px",
+//       backgroundColor: "#3B82F6",
+//       padding: "10px 20px",
+//       borderRadius: "24px",
+//       color: "white",
+//       fontWeight: "bold",
+//       fontSize: "16px",
+//       cursor: "pointer",
+//     },
+//   };
   
   export default AttendanceForm;
