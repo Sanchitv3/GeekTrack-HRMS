@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, getDocs, updateDoc, doc, query, where, addDoc } from "firebase/firestore";
+import { collection, onSnapshot, updateDoc, doc, query, where, addDoc, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
 interface LeaveRequest {
@@ -21,34 +21,37 @@ const LeaveRequests: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
 
   useEffect(() => {
-    const fetchLeaveRequests = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "LeaveRequests"));
+    const fetchLeaveRequests = () => {
+      const unsubscribe = onSnapshot(collection(db, "LeaveRequests"), (querySnapshot) => {
         const requests: LeaveRequest[] = [];
         querySnapshot.forEach((doc) => {
           requests.push({ id: doc.id, ...doc.data() } as LeaveRequest);
         });
         setLeaveRequests(requests);
-      } catch (error) {
-        console.error("Error fetching leave requests: ", error);
-      }
+      });
+
+      return unsubscribe;
     };
 
-    const fetchEmployees = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "Employees"));
+    const fetchEmployees = () => {
+      const unsubscribe = onSnapshot(collection(db, "Employees"), (querySnapshot) => {
         const employeesData: Employee[] = [];
         querySnapshot.forEach((doc) => {
           employeesData.push({ id: doc.id, name: doc.data().name } as Employee);
         });
         setEmployees(employeesData);
-      } catch (error) {
-        console.error("Error fetching employees: ", error);
-      }
+      });
+
+      return unsubscribe;
     };
 
-    fetchLeaveRequests();
-    fetchEmployees();
+    const leaveRequestsUnsubscribe = fetchLeaveRequests();
+    const employeesUnsubscribe = fetchEmployees();
+
+    return () => {
+      leaveRequestsUnsubscribe();
+      employeesUnsubscribe();
+    };
   }, []);
 
   const updateAttendanceRecords = async (employeeID: string, startDate: string, endDate: string) => {
@@ -90,9 +93,13 @@ const LeaveRequests: React.FC = () => {
       await updateDoc(leaveRequestRef, { status });
 
       if (status === "Approved") {
-        const leaveRequest = leaveRequests.find(request => request.id === id);
+        const leaveRequest = leaveRequests.find((request) => request.id === id);
         if (leaveRequest) {
-          await updateAttendanceRecords(leaveRequest.employeeID, leaveRequest.startDate, leaveRequest.endDate);
+          await updateAttendanceRecords(
+            leaveRequest.employeeID,
+            leaveRequest.startDate,
+            leaveRequest.endDate
+          );
         }
       }
 
@@ -103,10 +110,7 @@ const LeaveRequests: React.FC = () => {
       );
       alert(`Leave request ${status.toLowerCase()} successfully.`);
     } catch (error) {
-      console.error(
-        `Error updating leave request status to ${status}: `,
-        error
-      );
+      console.error(`Error updating leave request status to ${status}: `, error);
       alert(`Error updating leave request status to ${status}.`);
     }
   };
@@ -117,20 +121,33 @@ const LeaveRequests: React.FC = () => {
 
     return (
       <div key={request.id} className="shadow-2xl w-[80%] p-4 rounded-3xl">
-        <p><b>Employee Name:</b> {employeeName}</p>
-        <p><b>Start Date:</b> {new Date(request.startDate).toLocaleDateString()}</p>
-        <p><b>End Date:</b> {new Date(request.endDate).toLocaleDateString()}</p>
-        <p><b>Reason:</b> {request.reason}</p>
-        <p><b>Status:</b> {request.status}</p>
+        <p>
+          <b>Employee Name:</b> {employeeName}
+        </p>
+        <p>
+          <b>Start Date:</b> {new Date(request.startDate).toLocaleDateString()}
+        </p>
+        <p>
+          <b>End Date:</b> {new Date(request.endDate).toLocaleDateString()}
+        </p>
+        <p>
+          <b>Reason:</b> {request.reason}
+        </p>
+        <p>
+          <b>Status:</b> {request.status}
+        </p>
         {request.status === "Pending" && (
           <div className="w-full flex justify-evenly p-2">
             <button
               onClick={() => handleUpdateStatus(request.id, "Approved")}
-              className="p-2 bg-green-500 rounded-3xl hover:translate-y-1 duration-700 hover:opacity-80 text-white" 
+              className="p-2 bg-green-500 rounded-3xl hover:translate-y-1 duration-700 hover:opacity-80 text-white"
             >
               Approve
             </button>
-            <button onClick={() => handleUpdateStatus(request.id, "Rejected")} className="p-2 bg-red-500 rounded-3xl hover:translate-y-1 duration-700 hover:opacity-80 text-white">
+            <button
+              onClick={() => handleUpdateStatus(request.id, "Rejected")}
+              className="p-2 bg-red-500 rounded-3xl hover:translate-y-1 duration-700 hover:opacity-80 text-white"
+            >
               Reject
             </button>
           </div>
@@ -141,9 +158,11 @@ const LeaveRequests: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-10">
-      <h1 className="text-3xl font-serif font-semibold tracking-wider text-center">Leave Requests</h1>
+      <h1 className="text-3xl font-serif font-semibold tracking-wider text-center">
+        Leave Requests
+      </h1>
       <div className="grid grid-cols-3 gap-10">
-      {leaveRequests.map(renderRequest)}
+        {leaveRequests.map(renderRequest)}
       </div>
     </div>
   );
