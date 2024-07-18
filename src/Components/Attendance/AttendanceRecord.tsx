@@ -46,6 +46,7 @@ const AttendanceRecord: React.FC = () => {
                     id: doc.id,
                     ...(doc.data() as Omit<Attendance, "id">),
                 }));
+                attendanceData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                 setAttendanceRecords(attendanceData);
             });
 

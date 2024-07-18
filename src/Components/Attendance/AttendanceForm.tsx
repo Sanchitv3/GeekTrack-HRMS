@@ -3,62 +3,74 @@ import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
 import AttendanceRecord from "./AttendanceRecord";
+
 interface Attendance {
-    id: string;
-    date: Date;
-    status: string;
-  }
-  
-  const AttendanceForm: React.FC = () => {
-    const [date, setDate] = useState<Date>(new Date());
-    const [status, setStatus] = useState<string>("Present");
-    const [employeeID, setEmployeeID] = useState<string | null>(null);
-  
-    useEffect(() => {
-      const auth = getAuth();
-      const currentUser = auth.currentUser;
-  
-      if (currentUser) {
-        const fetchEmployeeID = async () => {
-          const employeesQuery = query(
-            collection(db, "Employees"),
-            where("email", "==", currentUser.email)
-          );
-          const querySnapshot = await getDocs(employeesQuery);
-          if (!querySnapshot.empty) {
-            const employeeDoc = querySnapshot.docs[0];
-            setEmployeeID(employeeDoc.id);
-          }
-        };
-  
-        fetchEmployeeID();
-      }
-    }, []);
-  
-    const handleSubmit = async () => {
-      const validDate = new Date().toLocaleDateString();
-      if (!date || !status || !employeeID || date.toLocaleDateString() !== validDate) {
-        alert("Error: Please fill all the fields correctly.");
+  id: string;
+  date: Date;
+  status: string;
+}
+
+const AttendanceForm: React.FC = () => {
+  const [date, setDate] = useState<Date>(new Date());
+  const [status, setStatus] = useState<string>("WFH");
+  const [employeeID, setEmployeeID] = useState<string | null>(null);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+
+    if (currentUser) {
+      const fetchEmployeeID = async () => {
+        const employeesQuery = query(
+          collection(db, "Employees"),
+          where("email", "==", currentUser.email)
+        );
+        const querySnapshot = await getDocs(employeesQuery);
+        if (!querySnapshot.empty) {
+          const employeeDoc = querySnapshot.docs[0];
+          setEmployeeID(employeeDoc.id);
+        }
+      };
+
+      fetchEmployeeID();
+    }
+  }, []);
+
+  const handleSubmit = async () => {
+    const validDate = new Date().toISOString().split("T")[0];
+    if (!date || !status || !employeeID || date.toISOString().split("T")[0] !== validDate) {
+      alert("Error: Please fill all the fields correctly.");
+      return;
+    }
+
+    try {
+      const attendanceQuery = query(
+        collection(db, "Attendance"),
+        where("employeeID", "==", employeeID),
+        where("date", "==", date.toISOString().split("T")[0])
+      );
+      const querySnapshot = await getDocs(attendanceQuery);
+      if (!querySnapshot.empty) {
+        alert("Error: Attendance has already been marked for today.");
         return;
       }
-  
-      try {
-        await addDoc(collection(db, "Attendance"), {
-          date: date.toISOString(),
-          status,
-          employeeID: employeeID,
-        });
-        alert("Success: Attendance record submitted successfully.");
-      } catch (error) {
-        console.error("Error submitting attendance record: ", error);
-        alert("Error: Error submitting attendance record.");
-      }
-    };
-  
-    return (
-        <div className="flex flex-col gap-20">
-      <div  className="flex flex-col items-center gap-[20px]">
-        <div  className="mb-[16px]">
+
+      await addDoc(collection(db, "Attendance"), {
+        date: date.toISOString().split("T")[0],
+        status,
+        employeeID: employeeID,
+      });
+      alert("Success: Attendance record submitted successfully.");
+    } catch (error) {
+      console.error("Error submitting attendance record: ", error);
+      alert("Error: Error submitting attendance record.");
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-20">
+      <div className="flex flex-col items-center gap-[20px]">
+        <div className="mb-[16px]">
           <label className="mb-[8px] text-gray-500">Date: {new Date().toISOString().split("T")[0]}</label>
         </div>
         <div className="flex items-center gap-2">
@@ -68,22 +80,13 @@ interface Attendance {
             <option value="WFO">Working from Office</option>
           </select>
         </div>
-        <button onClick={handleSubmit} className="bg-[#3B82F6] p-4 text-white rounded-3xl font-bold hover:translate-y-1 duration-700 hover:opacity-65">Submit Attendance</button>
-        
-      </div><AttendanceRecord/></div>
-    );
-  };
-//   const styles: { [key: string]: React.CSSProperties } = {
-//     btn: {
-//       marginTop: "24px",
-//       backgroundColor: "#3B82F6",
-//       padding: "10px 20px",
-//       borderRadius: "24px",
-//       color: "white",
-//       fontWeight: "bold",
-//       fontSize: "16px",
-//       cursor: "pointer",
-//     },
-//   };
-  
-  export default AttendanceForm;
+        <button onClick={handleSubmit} className="bg-[#3B82F6] p-4 text-white rounded-3xl font-bold hover:translate-y-1 duration-700 hover:opacity-65">
+          Submit Attendance
+        </button>
+      </div>
+      <AttendanceRecord />
+    </div>
+  );
+};
+
+export default AttendanceForm;

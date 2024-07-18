@@ -75,7 +75,7 @@ const Sidebar: React.FC = () => {
                   d="M8 7V3m8 4V3m-9 4h10m2 0a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h14z"
                 />
               </svg>
-              Calendar
+              Leave Requests
             </Link>
             <Link to="/documents" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">
               <svg
@@ -126,7 +126,58 @@ const Sidebar: React.FC = () => {
                   d="M9 17v-1a3 3 0 013-3h6a3 3 0 013 3v1M9 7h.01M15 7h.01M12 12h.01M3 12a9 9 0 0118 0 9 9 0 01-18 0z"
                 />
               </svg>
-              Attendance
+              Mark Attendance
+            </Link>
+            <Link to="/attendance-list" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">
+              <svg
+                className="w-6 h-6 mr-2 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 17v-1a3 3 0 013-3h6a3 3 0 013 3v1M9 7h.01M15 7h.01M12 12h.01M3 12a9 9 0 0118 0 9 9 0 01-18 0z"
+                />
+              </svg>
+              Attendance List
+            </Link>
+            <Link to="/log-timesheet" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">
+              <svg
+                className="w-6 h-6 mr-2 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 17v-1a3 3 0 013-3h6a3 3 0 013 3v1M9 7h.01M15 7h.01M12 12h.01M3 12a9 9 0 0118 0 9 9 0 01-18 0z"
+                />
+              </svg>
+              Log Timesheet
+            </Link>
+            <Link to="/timesheet-records" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md">
+              <svg
+                className="w-6 h-6 mr-2 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 17v-1a3 3 0 013-3h6a3 3 0 013 3v1M9 7h.01M15 7h.01M12 12h.01M3 12a9 9 0 0118 0 9 9 0 01-18 0z"
+                />
+              </svg>
+              Timesheet Records
             </Link>
           </div>
         </nav>

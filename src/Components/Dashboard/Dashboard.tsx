@@ -1,17 +1,9 @@
-import React from "react";
-import TimesheetForm from "../Timesheet/TimesheetForm";
-import TimesheetList from "../Timesheet/TimesheetList";
+import React from 'react'
 
-
-
-const Dashboard: React.FC = () => {
+const Dashboard = () => {
   return (
-    <div>
-    <TimesheetForm/>
-    <TimesheetList/>
-    </div>
-    
-  );
-};
+    <div>Dashboard</div>
+  )
+}
 
-export default Dashboard;
+export default Dashboard

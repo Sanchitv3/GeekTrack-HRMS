@@ -59,7 +59,7 @@ const TimesheetList: React.FC = () => {
 
   return (
     <div>
-      <h2>Timesheet List</h2>
+      <h2 className="text-center font-bold text-3xl p-4 font-serif">Timesheet List</h2>
       <table className="min-w-full bg-white border rounded-3xl">
         <thead>
           <tr className="text-left">

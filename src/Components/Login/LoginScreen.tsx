@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { GeekyLogo, loginIllustration } from "../../assets";
+import { bgIllustration, GeekyLogo,} from "../../assets";
 import LoginButton from "./LoginButton";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "../../firebase";
@@ -26,9 +26,10 @@ const LoginScreen = () => {
   }, [navigate]);
 
   return (
-    <div className="bg-[#849BDA]/[0.4] bg-gradient-to-r from-[#4D62B3]/[0.3] flex w-[100vw] h-[100vh] max-[480px]:flex-col justify-center items-center gap-4 p-5">
+    // <div className="bg-white flex w-[100vw] h-[100vh] max-[480px]:flex-col justify-center items-center gap-4 p-5">
+    <div>
       <div className="flex justify-center items-center">
-        <img src={loginIllustration} alt="illustration" />
+        <img src={bgIllustration} alt="illustration" className="h-[75vh] w-auto"/>
       </div>
       <div className="flex justify-center items-center xl:scale-125">
         <div id="loginBox" className="flex justify-start flex-col gap-4 p-5">

@@ -12,6 +12,8 @@ import ManageEmployees from './Components/Employee/ManageEmployees';
 import LeaveRequests from './Components/Leaves/LeaveRequests';
 import AttendanceForm from './Components/Attendance/AttendanceForm';
 import AttendanceList from './Components/Attendance/AttendanceList';
+import TimesheetList from './Components/Timesheet/TimesheetList';
+import TimesheetForm from './Components/Timesheet/TimesheetForm';
 function App() {
   return (
     <Router>
@@ -28,6 +30,8 @@ function App() {
             <Route path="leaveRequests" element={<LeaveRequests />}/>
             <Route path="attendance-form" element={<AttendanceForm />}/>
             <Route path="attendance-list" element={<AttendanceList />}/>
+            <Route path="timesheet-records" element={<TimesheetList />}/>
+            <Route path="log-timesheet" element={<TimesheetForm />}/>
           </Route>
         </Route>
     </Routes>

@@ -1,7 +1,6 @@
 import GoogleIcon from "./GoogleIcon.svg";
 import GeekyLogo from "./GeekyLogo.svg";
 import loginIllustration from "./loginIllustration.svg";
-import logo from "./logo.png";
 import formIllustration from "./formIllustration.svg";
 import ListItemIcon from "./ListItemIcon.svg";
 import listIcon from "./listIcon.svg";
@@ -10,11 +9,12 @@ import addEmp from "./addEmp.svg";
 import empList from "./empList.svg";
 import timesheet from "./timesheet.svg";
 import programmingIllustration from './programmingIllustration.svg';
+import bgIllustration from './bgIllustration.png';
+import HRMS_LOGO from './HRMS_LOGO.png';
 export {
   GeekyLogo,
   GoogleIcon,
   loginIllustration,
-  logo,
   formIllustration,
   ListItemIcon,
   listIcon,
@@ -23,4 +23,6 @@ export {
   empList,
   timesheet,
   programmingIllustration,
+  bgIllustration,
+  HRMS_LOGO,
 };

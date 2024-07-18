@@ -20,7 +20,7 @@ const LoginButton = () => {
   return (
     <div>
       <button
-        className="bg-[#FC5A5A] text-white p-2 rounded-md flex justify-center items-center gap-4 w-[20rem] hover:translate-y-[1px] hover:bg-gradient-to-r from-[#FC5A5A] to-red-700 duration-500"
+        className="bg-[#FC5A5A] text-white p-2 rounded-md flex justify-center items-center gap-4 w-[20rem] hover:translate-y-1 hover:translate-x-1 hover:bg-gradient-to-r from-[#FC5A5A] to-red-700 duration-500"
         onClick={() => login()}
       >
         <img src={GoogleIcon} alt="Google Icon" />
