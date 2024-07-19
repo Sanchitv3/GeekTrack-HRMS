@@ -115,9 +115,22 @@ const LeaveRequests: React.FC = () => {
     }
   };
 
+  const handleAutoApproveSickLeave = async (id: string) => {
+    const leaveRequest = leaveRequests.find((request) => request.id === id);
+    if (leaveRequest?.reason === "Sick") {
+      await handleUpdateStatus(id, "Approved");
+    }
+  };
+
   const renderRequest = (request: LeaveRequest) => {
     const employee = employees.find((emp) => emp.id === request.employeeID);
     const employeeName = employee ? employee.name : "Unknown";
+
+    // Automatically approve Sick leave requests
+    
+      if (request.reason === "Sick" && request.status === "Pending") {
+        handleAutoApproveSickLeave(request.id);
+      }
 
     return (
       <div key={request.id} className="shadow-2xl w-[80%] p-4 rounded-3xl">
@@ -136,7 +149,7 @@ const LeaveRequests: React.FC = () => {
         <p>
           <b>Status:</b> {request.status}
         </p>
-        {request.status === "Pending" && (
+        {request.status === "Pending" && request.reason !== "Sick" && (
           <div className="w-full flex justify-evenly p-2">
             <button
               onClick={() => handleUpdateStatus(request.id, "Approved")}
