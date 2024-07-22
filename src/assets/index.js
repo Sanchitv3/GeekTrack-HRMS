@@ -11,6 +11,16 @@ import timesheet from "./timesheet.svg";
 import programmingIllustration from './programmingIllustration.svg';
 import bgIllustration from './bgIllustration.png';
 import HRMS_LOGO from './HRMS_LOGO.png';
+import DashboardBg from './DashboardBg.svg';
+import AssignProject from './AssignProject.svg';
+import AttendanceRecords from './AttendanceRecords.svg';
+import MarkAttendance from './MarkAttendance.svg';
+import Documents from './Documents.svg';
+import Payroll from './Payroll.svg';
+import LogTimesheet from './LogTimesheet.svg';
+import TimesheetRecords from './TimesheetRecords.svg';
+import Projects from './projects.svg';
+
 export {
   GeekyLogo,
   GoogleIcon,
@@ -25,4 +35,13 @@ export {
   programmingIllustration,
   bgIllustration,
   HRMS_LOGO,
+  DashboardBg,
+  AssignProject,
+  AttendanceRecords,
+  MarkAttendance,
+  Documents,
+  Payroll,
+  LogTimesheet,
+  TimesheetRecords,
+  Projects
 };

@@ -18,7 +18,7 @@ interface Employee {
   state: string;
   zipcode: string;
   country: string;
-  phoneNumber: string;
+  phone: string;
 }
 
 interface Role {
@@ -126,7 +126,7 @@ const Navbar: React.FC = () => {
         state: editEmployee.state,
         zipcode: editEmployee.zipcode,
         country: editEmployee.country,
-        phoneNumber: editEmployee.phoneNumber,
+        phone: editEmployee.phone,
       });
 
       setEmployees(prevEmployees =>
@@ -167,7 +167,6 @@ const Navbar: React.FC = () => {
         )}
       </div>
       <div className="flex items-center space-x-4">
-        <button className="text-gray-600">btn</button>
         <div className="relative">
           <button className="focus:outline-none">
             <span className="sr-only">View notifications</span>
@@ -223,7 +222,7 @@ const Navbar: React.FC = () => {
                 <p><strong>Email:</strong> {selectedEmployee.email}</p>
                 <p><strong>Role:</strong> {selectedEmployee.roleName}</p>
                 <p><strong>Address:</strong> {selectedEmployee.addressLine1}, {selectedEmployee.city}, {selectedEmployee.state}, {selectedEmployee.zipcode}, {selectedEmployee.country}</p>
-                <p><strong>Phone Number:</strong> {selectedEmployee.phoneNumber}</p>
+                <p><strong>Phone Number:</strong> {selectedEmployee.phone}</p>
                 <button
                   className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
                   onClick={() => setIsEditing(true)}
@@ -232,7 +231,10 @@ const Navbar: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <div className="flex flex-col space-y-2">
+              <div className="flex flex-col space-y-2 ">
+                <label className="font-bold">
+              <i className="fa-solid fa-id-card"></i> Name
+            </label>
                 <input
                   type="text"
                   name="name"
@@ -241,6 +243,9 @@ const Navbar: React.FC = () => {
                   className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
                   placeholder="Name"
                 />
+                <label className="font-bold">
+              <i className="fa-solid fa-envelope"></i> Email
+            </label>
                 <input
                   type="text"
                   name="email"
@@ -249,6 +254,9 @@ const Navbar: React.FC = () => {
                   className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
                   placeholder="Email"
                 />
+                <label className="font-bold shadow-slate-700">
+              <i className="fa-solid fa-map-marker-alt"></i> Address Line 1
+            </label>
                 <input
                   type="text"
                   name="addressLine1"
@@ -257,6 +265,9 @@ const Navbar: React.FC = () => {
                   className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
                   placeholder="Address"
                 />
+                <label className="font-bold shadow-slate-700">
+              <i className="fa-solid fa-city"></i> City
+            </label>
                 <input
                   type="text"
                   name="city"
@@ -265,6 +276,9 @@ const Navbar: React.FC = () => {
                   className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
                   placeholder="City"
                 />
+                <label className="font-bold shadow-slate-700">
+              <i className="fa-solid fa-flag-usa"></i> State
+            </label>
                 <input
                   type="text"
                   name="state"
@@ -273,6 +287,9 @@ const Navbar: React.FC = () => {
                   className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
                   placeholder="State"
                 />
+                <label className="font-bold shadow-slate-700">
+              <i className="fa-solid fa-map-pin"></i> Zipcode
+            </label>
                 <input
                   type="text"
                   name="zipcode"
@@ -281,6 +298,9 @@ const Navbar: React.FC = () => {
                   className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
                   placeholder="Zipcode"
                 />
+                <label className="font-bold shadow-slate-700">
+              <i className="fa-solid fa-globe"></i> Country
+            </label>
                 <input
                   type="text"
                   name="country"
@@ -289,10 +309,13 @@ const Navbar: React.FC = () => {
                   className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
                   placeholder="Country"
                 />
+                <label className="font-bold">
+              <i className="fa-solid fa-phone"></i> Phone
+            </label>
                 <input
                   type="text"
                   name="phoneNumber"
-                  value={editEmployee?.phoneNumber || ""}
+                  value={editEmployee?.phone || ""}
                   onChange={handleEditChange}
                   className="border-none outline-none rounded-xl p-2 shadow-xl shadow-slate-700 bg-slate-800 text-slate-100 px-4 focus:outline-slate-800 focus:translate-x-2 duration-700"
                   placeholder="Phone Number"

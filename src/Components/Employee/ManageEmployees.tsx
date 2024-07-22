@@ -16,7 +16,7 @@ const ManageEmployees = () => {
           className="text-black p-6 rounded-2xl shadow-lg shadow-slate-600 flex flex-col justify-center items-center h-40 w-40 font-bold backdrop-blur-3xl hover:translate-y-5 duration-700 hover:scale-110"
           onClick={() => navigate('/employee-list')}
         >
-        <img src={empList} alt='add Employee Icon' /> Employee List
+        <img src={empList} alt='Employee Icon' /> Employee List
         </button>
         <button 
           className="text-black p-4 rounded-2xl shadow-lg shadow-slate-600 flex flex-col justify-center items-center h-40 w-40 font-bold backdrop-blur-3xl hover:translate-y-5 duration-700 hover:scale-110"
