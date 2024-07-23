@@ -20,7 +20,7 @@ import Payroll from './Payroll.svg';
 import LogTimesheet from './LogTimesheet.svg';
 import TimesheetRecords from './TimesheetRecords.svg';
 import Projects from './projects.svg';
-
+import leaveRequest from './leaveRequest.svg';
 export {
   GeekyLogo,
   GoogleIcon,
@@ -43,5 +43,6 @@ export {
   Payroll,
   LogTimesheet,
   TimesheetRecords,
-  Projects
+  Projects,
+  leaveRequest,
 };

@@ -148,7 +148,7 @@ const Navbar: React.FC = () => {
         <input
           type="text"
           placeholder="Search..."
-          className="border border-gray-300 rounded-md py-1 px-2"
+          className="rounded-3xl py-2 px-4 shadow-xl bg bg-gray-200 placeholder-slate-600 focus:outline-slate-500"
           value={searchInput}
           onChange={handleSearch}
         />
