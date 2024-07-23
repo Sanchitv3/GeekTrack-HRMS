@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import { db } from "../../firebase";
 import { collection, onSnapshot, updateDoc, doc, getDocs } from "firebase/firestore";
 import { FaTrashAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { RootState } from "../Store/store";
 
 // Define the Employee type
 interface Employee {
@@ -23,7 +25,7 @@ const EmployeeList: React.FC = () => {
   const [roles, setRoles] = useState<Role[]>([]);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [showDeleted, setShowDeleted] = useState(false); // State to toggle deleted employees
-
+  const permissions = useSelector((state:RootState)=>state.permission.permissionData)
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "Employees"), (snapshot) => {
       const employeesData: Employee[] = [];
@@ -99,7 +101,7 @@ const EmployeeList: React.FC = () => {
                 <td className="py-2 px-4 border-b">{employee.name}</td>
                 <td className="py-2 px-4 border-b">{employee.email}</td>
                 <td className="py-2 px-4 border-b">
-                  <select
+                  {permissions.some((permission)=>permission.name.includes('update_user')) ? <select
                     value={employee.roleID}
                     onChange={(e) => handleRoleChange(employee.id, e.target.value)}
                     className="border-none outline-none rounded p-2 bg-slate-800 text-slate-100"
@@ -108,9 +110,9 @@ const EmployeeList: React.FC = () => {
                     {roles.map((role) => (
                       <option key={role.id} value={role.id}>{role.roleName}</option>
                     ))}
-                  </select>
+                  </select> : <p>{employee.roleID}</p>}
                 </td>
-                <td className="py-2 px-4 border-b">
+                {permissions.some((permission)=>permission.name.includes('delete_user'))?(<td className="py-2 px-4 border-b">
                   <button
                     type="button"
                     onClick={() => confirmDeleteEmployee(employee.id)}
@@ -140,7 +142,7 @@ const EmployeeList: React.FC = () => {
                       </div>
                     </div>
                   )}
-                </td>
+                </td>):<td className="py-2 px-4 border-b">Not authorised</td>}
               </tr>
             ))}
           </tbody>
