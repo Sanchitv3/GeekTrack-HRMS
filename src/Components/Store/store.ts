@@ -1,9 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userSlice';
+import Permission from './permissionsSlice';
+
 
 const store = configureStore({
   reducer: {
     user: userReducer,
+    permission:Permission
   },
 });
 

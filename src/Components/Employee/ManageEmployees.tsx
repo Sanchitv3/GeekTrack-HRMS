@@ -5,7 +5,6 @@ import { addEmp } from '../../assets';
 
 const ManageEmployees = () => {
   const navigate = useNavigate();
-
   return (
     <div className="p-6 max-w-4xl mx-auto flex flex-col bg-contain bg-no-repeat h-full w-full " style={{backgroundImage: `url(${pic1})`}}>
       <div className='w-full h-full bg-white/90 rounded-3xl flex flex-col gap-16'>
