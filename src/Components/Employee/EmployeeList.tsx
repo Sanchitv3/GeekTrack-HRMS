@@ -24,7 +24,7 @@ const EmployeeList: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
-  const [showDeleted, setShowDeleted] = useState(false); // State to toggle deleted employees
+  const [showDeleted, setShowDeleted] = useState(false);
   const permissions = useSelector((state:RootState)=>state.permission.permissionData)
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "Employees"), (snapshot) => {
@@ -72,6 +72,11 @@ const EmployeeList: React.FC = () => {
 
   const filteredEmployees = employees.filter(employee => showDeleted || !employee.deleted);
 
+  const getRoleName = (roleID: string) => {
+    const role = roles.find(r => r.id === roleID);
+    return role ? role.roleName : 'Unknown Role';
+  };
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-center text-2xl font-bold mb-6">Employee List</h1>
@@ -110,7 +115,7 @@ const EmployeeList: React.FC = () => {
                     {roles.map((role) => (
                       <option key={role.id} value={role.id}>{role.roleName}</option>
                     ))}
-                  </select> : <p>{employee.roleID}</p>}
+                  </select> : <p>{getRoleName(employee.roleID)}</p>}
                 </td>
                 {permissions.some((permission)=>permission.name.includes('delete_user'))?(<td className="py-2 px-4 border-b">
                   <button

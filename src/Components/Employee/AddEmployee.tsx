@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
-import { Timestamp, addDoc, collection, getDocs } from "firebase/firestore";
+import { Timestamp, addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { RootState } from "../Store/store";
 
 const AddEmployee: React.FC = () => {
   const [name, setName] = useState("");
@@ -15,6 +17,7 @@ const AddEmployee: React.FC = () => {
   const [dateOfJoining, setDateOfJoining] = useState("");
   const [roleID, setRoleID] = useState("");
   const [roles, setRoles] = useState<{ id: string; roleName: string }[]>([]);
+  const [roleData, setRoleData] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -25,6 +28,29 @@ const AddEmployee: React.FC = () => {
 
     fetchRoles();
   }, []);
+    const userEmail=useSelector((state:RootState)=>state.user.user).email;
+  useEffect(() => {
+
+    const fetchUserRole = async () => {
+      // Query the Employees collection where the email matches
+      const employeesQuery = query(collection(db, 'Employees'), where('email', '==', userEmail));
+      const querySnapshot = await getDocs(employeesQuery);
+
+      if (!querySnapshot.empty) {
+        const userDoc = querySnapshot.docs[0];
+        const roleID = userDoc.data()?.roleID;
+        if (roleID) {
+          const roleDocRef = doc(db, 'Roles', roleID);
+          const roleDoc = await getDoc(roleDocRef);
+          if (roleDoc.exists()) {
+            setRoleData(roleDoc.data()?.roleName || null);
+            console.log(roleData);
+          }
+        }
+      }
+    };
+    fetchUserRole();
+  }, [roleData, userEmail]);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -192,7 +218,7 @@ const AddEmployee: React.FC = () => {
             >
               <option value="" disabled>Select Role</option>
               {roles.map((role) => (
-                <option key={role.id} value={role.id}>{role.roleName}</option>
+                <option key={role.id} value={role.id} disabled={roleData === "Admin" && (role.roleName ==="SuperAdmin" || role.roleName ==="Admin")}>{role.roleName}</option>
               ))}
             </select>
           </div>
