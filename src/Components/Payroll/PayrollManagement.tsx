@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { db } from '../../firebase';
 import { collection, onSnapshot, updateDoc, doc, addDoc, getDoc, query, where, getDocs } from 'firebase/firestore';
 import Modal from '../Modal/Modal';
+import Payslip from './Payslip';
 
 interface Employee {
   id: string;
@@ -12,7 +13,7 @@ interface Employee {
   roleID: string;
 }
 
-interface EmployeeSalary {
+export interface EmployeeSalary {
   id: string;
   name: string;
   baseSalary: number;
@@ -39,6 +40,9 @@ const PayrollManagement: React.FC = () => {
   const [editingSalary, setEditingSalary] = useState<{ [key: string]: EmployeeSalary }>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentEdit, setCurrentEdit] = useState<{ payrollId: string, employeeId: string } | null>(null);
+  const [selectedPayslip, setSelectedPayslip] = useState<EmployeeSalary | null>(null);
+  const [month, setMonth] = useState<string>('');
+  const [year, setYear] = useState<number>(0);
 
   useEffect(() => {
     const unsubscribeEmployees = onSnapshot(collection(db, 'Employees'), (snapshot) => {
@@ -167,6 +171,12 @@ const PayrollManagement: React.FC = () => {
     setIsModalOpen(true);
   };
 
+  const openPayslip = (employeeSalary: EmployeeSalary, month: string, year: number) => {
+    setSelectedPayslip(employeeSalary);
+    setMonth(month);
+    setYear(year);
+  };
+
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-center text-2xl font-bold mb-6">Payroll Management</h1>
@@ -202,14 +212,27 @@ const PayrollManagement: React.FC = () => {
                       </button>
                       <button
                         onClick={() => handleProcessSalary(payrollItem.id, employeeSalary.id)}
-                        className={`py-1 px-3 rounded-md ${employeeSalary.processed ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 text-white'}`}
+                        className={`py-1 px-3 mr-2 rounded-md ${employeeSalary.processed ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 text-white'}`}
                         disabled={employeeSalary.processed}
                       >
                         {employeeSalary.processed ? 'Processed' : 'Process Salary'}
                       </button>
+                      <button
+                onClick={() => openPayslip(employeeSalary, payrollItem.month, payrollItem.year)}
+                className="bg-blue-500 text-white py-1 px-3 rounded-md"
+              >
+                View Payslip
+              </button>
+              
                     </div>
                   ))}
-                </td>
+                </td>{selectedPayslip && (
+        <Payslip
+          employeeSalary={selectedPayslip}
+          month={month}
+          year={year}
+        />
+      )}
               </tr>
             ))}
           </tbody>

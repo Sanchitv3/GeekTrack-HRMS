@@ -21,6 +21,7 @@ import LogTimesheet from './LogTimesheet.svg';
 import TimesheetRecords from './TimesheetRecords.svg';
 import Projects from './projects.svg';
 import leaveRequest from './leaveRequest.svg';
+import Geekyants_Logo from './Geekyants_Logo.png';
 export {
   GeekyLogo,
   GoogleIcon,
@@ -45,4 +46,5 @@ export {
   TimesheetRecords,
   Projects,
   leaveRequest,
+  Geekyants_Logo
 };
