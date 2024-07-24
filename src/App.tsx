@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {upatePermissions} from './Components/Store/permissionsSlice';
 
 import { RootState } from "./Components/Store/store";
+import Documents from "./Components/Documents/Documents";
 
 export interface PermissionType {
   id: string;
@@ -112,6 +113,7 @@ function App() {
             <Route path="/timesheet-records" element={<TimesheetList />} />
             <Route path="/log-timesheet" element={<TimesheetForm />} />
             <Route path="/payrolls" element={<PayrollManagement />} />
+            <Route path="/Documents" element={<Documents />} />
           </Route>
         </Route>
       </Routes>
