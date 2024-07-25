@@ -20,7 +20,7 @@ const TimesheetList: React.FC = () => {
   const [timesheets, setTimesheets] = useState<Timesheet[]>([]);
   const [employees, setEmployees] = useState<{ [key: string]: string }>({});
   const [projects, setProjects] = useState<{ [key: string]: string }>({});
-
+  
   useEffect(() => {
     const fetchEmployees = async () => {
       const employeesSnapshot = await getDocs(collection(db, "Employees"));
@@ -58,41 +58,43 @@ const TimesheetList: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h2 className="text-center font-bold text-3xl p-4 font-serif">Timesheet List</h2>
-      <table className="min-w-full bg-white border rounded-3xl">
-        <thead>
-          <tr className="text-left">
-            <th className="py-2 px-4 border-b">Employee Name</th>
-            <th className="py-2 px-4 border-b">Project Name</th>
-            <th className="py-2 px-4 border-b">Description</th>
-            <th className="py-2 px-4 border-b">Date</th>
-            <th className="py-2 px-4 border-b">Hours Worked</th>
-            <th className="py-2 px-4 border-b">Status</th>
-            <th className="py-2 px-4 border-b">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {timesheets.map((timesheet) => (
-            <tr key={timesheet.id}>
-              <td className="py-2 px-4 border-b">{employees[timesheet.employeeID] || "Unknown"}</td>
-              <td className="py-2 px-4 border-b">{projects[timesheet.projectID] || "Unknown"}</td>
-              <td className="py-2 px-4 border-b">{timesheet.description || "Undefined"}</td>
-              <td className="py-2 px-4 border-b">{timesheet.date.split("T")[0]}</td>
-              <td className="py-2 px-4 border-b">{timesheet.hoursWorked}</td>
-              <td className="py-2 px-4 border-b">{timesheet.status}</td>
-              <td className="py-2 px-4 border-b">
-                {timesheet.status === "Pending" && (
-                  <>
-                    <button onClick={() => handleApproval(timesheet.id, "Approved")} className="bg-green-600 text-white font-semibold rounded-3xl"><CheckCircleIcon/></button>
-                    <button onClick={() => handleApproval(timesheet.id, "Rejected")} className="bg-red-600 text-white font-semibold rounded-3xl"><CancelIcon/></button>
-                  </>
-                )}
-              </td>
+    <div className="p-6 max-w-7xl mx-auto">
+      <h2 className="text-4xl font-bold mb-8 text-center">Timesheet List</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full whitespace-no-wrap shadow-2xl border rounded-lg" style={{borderCollapse:"separate"}}>
+          <thead className="bg-gray-100 text-left">
+            <tr>
+              <th className="px-4 py-2">Employee Name</th>
+              <th className="px-4 py-2">Project Name</th>
+              <th className="px-4 py-2">Description</th>
+              <th className="px-4 py-2">Date</th>
+              <th className="px-4 py-2">Hours Worked</th>
+              <th className="px-4 py-2">Status</th>
+              <th className="px-4 py-2">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {timesheets.map((timesheet) => (
+              <tr key={timesheet.id} className="hover:bg-gray-50">
+                <td className="border-t px-4 py-2">{employees[timesheet.employeeID] || "Unknown"}</td>
+                <td className="border-t px-4 py-2">{projects[timesheet.projectID] || "Unknown"}</td>
+                <td className="border-t px-4 py-2">{timesheet.description || "Undefined"}</td>
+                <td className="border-t px-4 py-2">{timesheet.date.split("T")[0]}</td>
+                <td className="border-t px-4 py-2">{timesheet.hoursWorked}</td>
+                <td className="border-t px-4 py-2">{timesheet.status}</td>
+                <td className="border-t px-4 py-2">
+                  {timesheet.status === "Pending" && (
+                    <>
+                      <button onClick={() => handleApproval(timesheet.id, "Approved")} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded"><CheckCircleIcon /></button>
+                      <button onClick={() => handleApproval(timesheet.id, "Rejected")} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><CancelIcon /></button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

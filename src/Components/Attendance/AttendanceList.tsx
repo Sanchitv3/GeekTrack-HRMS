@@ -83,7 +83,7 @@ const AttendanceList: React.FC = () => {
         {filteredAttendanceRecords.map((record) => (
           <div key={record.id} className="p-2 rounded-xl shadow-lg">
             <p><b>Date: </b>{new Date(record.date).toLocaleDateString()}</p>
-            <p><b>Status:</b> {record.status}</p>
+            <p className={`${record.status === 'WFH' || record.status === 'WFO' ? 'text-green-700 font-semibold' : 'text-red-700 font-semibold'}`}><b className="text-black font-bold">Status:</b> {record.status}</p>
             <p><b>Employee:</b> {getEmployeeName(record.employeeID)}</p>
           </div>
         ))}

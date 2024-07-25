@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { collection, onSnapshot, updateDoc, doc, query, where, addDoc, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
+import { BiCheckCircle, BiXCircle, BiHourglass } from "react-icons/bi"; 
+import { LeaveBg } from "../../assets";
 
 interface LeaveRequest {
   id: string;
@@ -126,57 +128,74 @@ const LeaveRequests: React.FC = () => {
     const employee = employees.find((emp) => emp.id === request.employeeID);
     const employeeName = employee ? employee.name : "Unknown";
 
+    let icon;
+    switch (request.status) {
+      case "Approved":
+        icon = <BiCheckCircle color="green"/>;
+        break;
+      case "Rejected":
+        icon = <BiXCircle color="red"/>;
+        break;
+      default:
+        icon = <BiHourglass color="orange"/>;
+    }
     // Automatically approve Sick leave requests
     
       if (request.reason === "Sick" && request.status === "Pending") {
         handleAutoApproveSickLeave(request.id);
       }
 
-    return (
-      <div key={request.id} className="shadow-2xl w-[80%] p-4 rounded-3xl">
-        <p>
-          <b>Employee Name:</b> {employeeName}
-        </p>
-        <p>
-          <b>Start Date:</b> {new Date(request.startDate).toLocaleDateString()}
-        </p>
-        <p>
-          <b>End Date:</b> {new Date(request.endDate).toLocaleDateString()}
-        </p>
-        <p>
-          <b>Reason:</b> {request.reason}
-        </p>
-        <p>
-          <b>Status:</b> {request.status}
-        </p>
-        {request.status === "Pending" && request.reason !== "Sick" && (
-          <div className="w-full flex justify-evenly p-2">
-            <button
-              onClick={() => handleUpdateStatus(request.id, "Approved")}
-              className="p-2 bg-green-500 rounded-3xl hover:translate-y-1 duration-700 hover:opacity-80 text-white"
-            >
-              Approve
-            </button>
-            <button
-              onClick={() => handleUpdateStatus(request.id, "Rejected")}
-              className="p-2 bg-red-500 rounded-3xl hover:translate-y-1 duration-700 hover:opacity-80 text-white"
-            >
-              Reject
-            </button>
+      return (
+        <div
+          key={request.id}
+          className={`shadow-xl w-full p-4 rounded-lg ${
+            request.status === "Approved" ? "outline-dashed outline-green-300" :
+            request.status === "Rejected" ? "outline-dashed outline-red-300" :
+            "outline-dashed outline-yellow-300"
+          }`}
+        >
+          <div className="flex items-center space-x-2">
+            {icon}
+            <div>
+              <p><strong>Employee Name:</strong> {employeeName}</p>
+              <p><strong>Start Date:</strong> {new Date(request.startDate).toLocaleDateString()}</p>
+              <p><strong>End Date:</strong> {new Date(request.endDate).toLocaleDateString()}</p>
+              <p><strong>Reason:</strong> {request.reason}</p>
+              <p><strong>Status:</strong> {request.status}</p>
+            </div>
           </div>
-        )}
-      </div>
-    );
-  };
+          {request.status === "Pending" && (
+            <div className="mt-4 flex justify-between">
+              <button
+                onClick={() => handleUpdateStatus(request.id, "Approved")}
+                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors shadow-xl duration-700"
+              >
+                Approve
+              </button>
+              <button
+                onClick={() => handleUpdateStatus(request.id, "Rejected")}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors shadow-xl duration-700"
+              >
+                Reject
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    };
 
   return (
     <div className="flex flex-col gap-10">
       <h1 className="text-3xl font-serif font-semibold tracking-wider text-center">
         Leave Requests
       </h1>
-      <div className="grid grid-cols-3 gap-10">
+      <div className="flex">
+        <img src={LeaveBg} alt="Bg" className="h-60 fixed right-0"/>
+      <div className="grid grid-cols-3 gap-10 w-[75%]">
         {leaveRequests.map(renderRequest)}
       </div>
+      </div>
+      
     </div>
   );
 };

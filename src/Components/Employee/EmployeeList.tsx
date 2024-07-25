@@ -91,8 +91,8 @@ const EmployeeList: React.FC = () => {
         </label>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-md">
-          <thead>
+      <table className="w-full whitespace-no-wrap shadow-2xl border rounded-lg" style={{borderCollapse:"separate"}}>
+      <thead className="bg-gray-100 text-left">
             <tr>
               <th className="py-2 px-4 border-b">Name</th>
               <th className="py-2 px-4 border-b">Email</th>
@@ -100,7 +100,7 @@ const EmployeeList: React.FC = () => {
               <th className="py-2 px-4 border-b">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200">
             {filteredEmployees.map((employee) => (
               <tr key={employee.id} className={employee.deleted ? 'bg-red-200' : ''}>
                 <td className="py-2 px-4 border-b">{employee.name}</td>

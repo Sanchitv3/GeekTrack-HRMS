@@ -3,6 +3,7 @@ import { db } from "../../firebase";
 import { Timestamp, addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { RootState } from "../Store/store";
+import { FemaleAvatar, MaleAvatar } from "../../assets";
 
 const AddEmployee: React.FC = () => {
   const [name, setName] = useState("");
@@ -88,6 +89,11 @@ const AddEmployee: React.FC = () => {
         onSubmit={handleSubmit}
         className="flex items-center justify-between flex-col h-[90vh] w-[70vw] bg-white rounded-3xl shadow-2xl shadow-slate-400 p-10"
       >
+        <div className="flex flex-row justify-center items-center gap-4">
+        <h1 className="font-mono font-bold text-4xl animate-pulse">ADD EMPLOYEE</h1>
+          <img src={MaleAvatar} alt="MaleAvatar" className="h-20"/>
+          <img src={FemaleAvatar} alt="FemaleAvatar" className="h-20"/>
+        </div>
         <div className="justify-around flex flex-col h-[80%] w-[80%] font-mono">
           <div className="justify-between flex items-center">
             <label className="font-bold">

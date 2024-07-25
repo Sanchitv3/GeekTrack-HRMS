@@ -3,6 +3,7 @@ import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
 import AttendanceRecord from "./AttendanceRecord";
+import { MarkAttendance } from "../../assets";
 
 interface Attendance {
   id: string;
@@ -70,7 +71,10 @@ const AttendanceForm: React.FC = () => {
   return (
     <div className="flex flex-col gap-20">
       <div className="flex flex-col items-center gap-[20px]">
-        <div className="mb-[16px]">
+        <div className="flex flex-row">
+          <img src={MarkAttendance} alt="Mark Attendance Illustration"  className="h-60"/>
+          <div className="flex flex-col justify-center">
+        <div className="mb-[16px] flex flex-col">
           <label className="mb-[8px] text-gray-500">Date: {new Date().toISOString().split("T")[0]}</label>
         </div>
         <div className="flex items-center gap-2">
@@ -79,6 +83,8 @@ const AttendanceForm: React.FC = () => {
             <option value="WFH">Working from Home</option>
             <option value="WFO">Working from Office</option>
           </select>
+        </div>
+        </div>
         </div>
         <button onClick={handleSubmit} className="bg-[#3B82F6] p-4 text-white rounded-3xl font-bold hover:translate-y-1 duration-700 hover:opacity-65">
           Submit Attendance

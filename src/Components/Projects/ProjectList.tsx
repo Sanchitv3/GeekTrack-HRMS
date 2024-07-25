@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { db } from "../../firebase";
 import { collection, addDoc, getDocs, onSnapshot, updateDoc, doc } from "firebase/firestore";
 import { FaTrashAlt } from "react-icons/fa";
+import { ProjectsIllustration } from "../../assets";
 
 interface Project {
   id: string;
@@ -63,13 +64,15 @@ const ProjectList: React.FC = () => {
       <h1 className="text-center text-2xl font-bold mb-6">Project List</h1>
       <form onSubmit={handleAddProject} className="mb-6 flex flex-col items-center gap-8">
         <div className="grid grid-cols-2 w-full gap-2">
-        <label className="font-bold text-slate-500">Project Name:</label>
+          <img src={ProjectsIllustration} alt="ProjectsIllustration" className=""/>
+          <div className="grid grid-cols-2 w-full gap-2">
+            <label className="font-bold text-slate-500">Project Name:</label>
           <input
             type="text"
             value={projectName}
             onChange={(e) => setProjectName(e.target.value)}
             placeholder="Project Name"
-            className="border p-2 rounded"
+            className=" p-2 px-4 rounded-2xl bg-slate-900 text-slate-400 shadow-md shadow-slate-700 outline-none focus:outline-slate-800  focus:translate-x-2 duration-700"
             required
           />
            <label className="font-bold text-slate-500">Project Description:</label>
@@ -77,7 +80,7 @@ const ProjectList: React.FC = () => {
             value={projectDescription}
             onChange={(e) => setProjectDescription(e.target.value)}
             placeholder="Project Description"
-            className="border p-2 rounded"
+            className=" p-2 px-4 rounded-2xl bg-slate-900 text-slate-400 shadow-md shadow-slate-700 outline-none focus:outline-slate-800  focus:translate-x-2 duration-700"
             required
           />
            <label className="font-bold text-slate-500">Start Date:</label>
@@ -86,7 +89,7 @@ const ProjectList: React.FC = () => {
             value={projectStartDate}
             onChange={(e) => setProjectStartDate(e.target.value)}
             placeholder="Start Date"
-            className="border p-2 rounded"
+            className=" p-2 px-4 rounded-2xl bg-slate-900 text-slate-400 shadow-md shadow-slate-700 outline-none focus:outline-slate-800  focus:translate-x-2 duration-700"
             required
           />
            <label className="font-bold text-slate-500">End Date:</label>
@@ -95,12 +98,14 @@ const ProjectList: React.FC = () => {
             value={projectEndDate}
             onChange={(e) => setProjectEndDate(e.target.value)}
             placeholder="End Date"
-            className="border p-2 rounded"
+            className=" p-2 px-4 rounded-2xl bg-slate-900 text-slate-400 shadow-md shadow-slate-700 outline-none focus:outline-slate-800  focus:translate-x-2 duration-700"
             required
           />
+          </div>
+        
           
         </div>
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded-3xl w-[25%] hover:translate-y-2 hover:opacity-65 duration-700">Add Project</button>
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded-3xl w-[25%] hover:translate-y-2 hover:opacity-65 duration-700 shadow-xl shadow-slate-500">Add Project</button>
       </form>
       <div className="flex justify-between mb-4">
         <label className="flex items-center space-x-2">
@@ -112,9 +117,9 @@ const ProjectList: React.FC = () => {
           <span>Show Deleted Projects</span>
         </label>
       </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-md">
-          <thead>
+      <div className="overflow-x-scroll h-56 ">
+        <table className="w-full whitespace-no-wrap shadow-2xl border rounded-lg" style={{borderCollapse:"separate"}}>
+          <thead className="bg-gray-100 text-left">
             <tr>
               <th className="py-2 px-4 border-b">Name</th>
               <th className="py-2 px-4 border-b">Description</th>
@@ -123,7 +128,7 @@ const ProjectList: React.FC = () => {
               <th className="py-2 px-4 border-b">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200">
             {filteredProjects.map((project) => (
               <tr key={project.id} className={project.deleted ? 'bg-red-200' : ''}>
                 <td className="py-2 px-4 border-b">{project.name}</td>

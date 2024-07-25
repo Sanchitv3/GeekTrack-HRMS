@@ -90,9 +90,9 @@ const TimesheetForm: React.FC = () => {
           <label className="font-bold">Date: <CalendarMonthIcon/></label>
           <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="p-4 rounded-3xl px-8 bg-slate-50"/>
           <label className="font-bold">Description:</label>
-          <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} required className="p-4 rounded-3xl px-8 bg-slate-50"/>
+          <input type="text" value={description} placeholder="Description.." onChange={(e) => setDescription(e.target.value)} required className="p-4 rounded-3xl px-8 bg-slate-50"/>
           <label className="font-bold">Hours Worked: <AccessTimeIcon/></label>
-          <input type="number" value={hoursWorked} onChange={(e) => setHoursWorked(Number(e.target.value))} required min="0" max="24" className="p-4 rounded-3xl px-8 bg-slate-50"/>
+          <input type="number" value={hoursWorked} onChange={(e) => setHoursWorked(Number(e.target.value))} required min="1" max="24" className="p-4 rounded-3xl px-8 bg-slate-50"/>
           <button type="submit" className="bg-blue-500 text-white font-semibold rounded-3xl p-4 hover:bg-blue-800 hover:translate-y-2 duration-700">Submit Timesheet</button>
         </form>
         <img src={timesheet} alt="illustration" className="h-[30vh] "/>

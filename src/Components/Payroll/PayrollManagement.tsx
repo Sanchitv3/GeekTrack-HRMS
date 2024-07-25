@@ -187,39 +187,39 @@ const PayrollManagement: React.FC = () => {
         Process Payroll
       </button>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-md text-left">
-          <thead>
+      <table className="w-full whitespace-no-wrap shadow-2xl border rounded-lg" style={{borderCollapse:"separate"}}>
+      <thead className="bg-gray-100 text-left">
             <tr>
               <th className="py-2 px-4 border-b">Month</th>
               <th className="py-2 px-4 border-b">Year</th>
               <th className="py-2 px-4 border-b">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200">
             {payroll.map((payrollItem) => (
               <tr key={payrollItem.id}>
                 <td className="py-2 px-4 border-b">{payrollItem.month}</td>
                 <td className="py-2 px-4 border-b">{payrollItem.year}</td>
                 <td className="py-2 px-4 border-b">
                   {payrollItem.employeeSalaries.map((employeeSalary) => (
-                    <div key={employeeSalary.id} className="mb-2">
+                    <div key={employeeSalary.id} className="mb-2 font-mono">
                       <span className='font-bold text-slate-600 block'>{employeeSalary.name}:</span>
                       <button
                         onClick={() => openEditModal(payrollItem.id, employeeSalary)}
-                        className="bg-yellow-500 text-white py-1 px-3 rounded-md mr-2"
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-2xl mr-2 hover:translate-y-1 duration-700 "
                       >
                         Edit Salary
                       </button>
                       <button
                         onClick={() => handleProcessSalary(payrollItem.id, employeeSalary.id)}
-                        className={`py-1 px-3 mr-2 rounded-md ${employeeSalary.processed ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 text-white'}`}
+                        className={`py-2 px-4 mr-2 rounded-2xl ${employeeSalary.processed ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 text-white'}`}
                         disabled={employeeSalary.processed}
                       >
                         {employeeSalary.processed ? 'Processed' : 'Process Salary'}
                       </button>
                       <button
                 onClick={() => openPayslip(employeeSalary, payrollItem.month, payrollItem.year)}
-                className="bg-blue-500 text-white py-1 px-3 rounded-md"
+                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-2xl mr-2 hover:translate-y-1 duration-700 "
               >
                 View Payslip
               </button>

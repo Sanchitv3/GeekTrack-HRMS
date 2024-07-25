@@ -22,6 +22,11 @@ import TimesheetRecords from './TimesheetRecords.svg';
 import Projects from './projects.svg';
 import leaveRequest from './leaveRequest.svg';
 import Geekyants_Logo from './Geekyants_Logo.png';
+import LeaveBg from './LeaveBg.svg';
+import ProjectsIllustration from './ProjectsIllustration.svg';
+import AssignEmp from './AssignEmp.svg';
+import MaleAvatar from './MaleAvatar.svg';
+import FemaleAvatar from './FemaleAvatar.svg';
 export {
   GeekyLogo,
   GoogleIcon,
@@ -46,5 +51,11 @@ export {
   TimesheetRecords,
   Projects,
   leaveRequest,
-  Geekyants_Logo
+  Geekyants_Logo,
+  LeaveBg,
+  ProjectsIllustration,
+  AssignEmp,
+  MaleAvatar,
+  FemaleAvatar,
+  
 };

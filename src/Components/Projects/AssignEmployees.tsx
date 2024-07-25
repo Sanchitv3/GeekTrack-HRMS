@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { collection, onSnapshot, updateDoc, doc } from "firebase/firestore";
+import { AssignEmp } from "../../assets";
 
 interface Employee {
   id: string;
@@ -62,18 +63,19 @@ const AssignEmployees: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-center text-2xl font-bold mb-6">Assign Employees to Project</h1>
+    <div className="p-6 max-w-4xl mx-auto flex justify-center w-full h-full flex-col">
+     <h1 className="text-center text-3xl font-bold mb-6 font-mono">Assign Employees to Project</h1>
+      <img src={AssignEmp} alt="Assign Emp Illustration" className="h-60"/>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-md">
-          <thead>
+      <table className="w-full whitespace-no-wrap shadow-2xl border rounded-lg" style={{borderCollapse:"separate"}}>
+      <thead className="bg-gray-100 text-left">
             <tr>
               <th className="py-2 px-4 border-b">Employee Name</th>
               <th className="py-2 px-4 border-b">Current Project</th>
               <th className="py-2 px-4 border-b">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200">
             {employees.map((employee) => (
               <tr key={employee.id} className={employee.deleted ? "opacity-40" : ""}>
                 <td className={`py-2 px-4 ${employee.deleted ? "text-slate-900" : ""}`}>{employee.name}</td>

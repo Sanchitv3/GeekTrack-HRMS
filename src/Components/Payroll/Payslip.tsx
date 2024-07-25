@@ -36,7 +36,7 @@ const Payslip: React.FC<PayslipProps> = ({ employeeSalary, month, year }) => {
       <h2 className="text-xl font-bold mb-4">Payslip for {employeeSalary.name}</h2>
       <button
         onClick={handleDownloadPdf}
-        className="bg-green-500 text-white py-2 px-4 rounded-md"
+        className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-2xl hover:translate-y-1 duration-700 "
       >
         Download Payslip as PDF
       </button>
